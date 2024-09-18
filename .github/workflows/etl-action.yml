@@ -8,10 +8,21 @@ env:
 on:
   schedule:
     - cron: "21 7 * * *" 
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+      
 jobs:
   run-etl-pipeline:
     runs-on: ubuntu-latest
     steps:
+      - uses: listendev/action@v0.10
+        with:
+          jwt: ${{ secrets.LS }}
+          ci: only
       - name: Checkout
         uses: xetdata/checkout@v1
       - name: Set up Python 
